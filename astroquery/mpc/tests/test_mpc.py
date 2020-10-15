@@ -22,7 +22,7 @@ parameters = {
 for prefix, (name, kwargs) in parameters.items():
     with open(prefix + '.html', 'w') as outf:
         response = MPC.get_ephemeris_async(name, unc_links=True, **kwargs)
-        outf.write(response.text)
+        outf.write(response.content)
 ```
 
 For mock testing the object query:

@@ -211,15 +211,15 @@ class HeasarcClass(BaseQuery):
         if not verbose:
             commons.suppress_vo_warnings()
 
-        if "BATCH_RETRIEVAL_MSG ERROR:" in response.text:
+        if "BATCH_RETRIEVAL_MSG ERROR:" in response.content:
             raise InvalidQueryError("One or more inputs is not recognized by HEASARC. "
                              "Check that the object name is in GRB, SIMBAD+Sesame, or "
                              "NED format and that the mission name is as listed in "
                              "query_mission_list().")
-        elif "Software error:" in response.text:
+        elif "Software error:" in response.content:
             raise InvalidQueryError("Unspecified error from HEASARC database. "
-                                    "\nCheck error message: \n{!s}".format(response.text))
-        elif "NO MATCHING ROWS" in response.text:
+                                    "\nCheck error message: \n{!s}".format(response.content))
+        elif "NO MATCHING ROWS" in response.content:
             warnings.warn(NoResultsWarning("No matching rows were found in the query."))
             return Table()
 

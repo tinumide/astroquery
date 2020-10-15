@@ -195,7 +195,7 @@ class CadcClass(BaseQuery):
                 logger.error('Logging error: {}'.format(e))
                 raise e
             # extract cookie
-            cookie = '"{}"'.format(response.text)
+            cookie = '"{}"'.format(response.content)
             if cookie is not None:
                 if isinstance(self.cadctap._session, authsession.AuthSession):
                     self.cadctap._session.credentials.set_cookie(
@@ -814,7 +814,7 @@ def get_access_url(service, capability=None):
                 logger.debug(
                     "ERROR getting the CADC registry: {}".format(str(err)))
                 raise err
-            for line in response.text.splitlines():
+            for line in response.content.splitlines():
                 if len(line) > 0 and not line.startswith('#'):
                     service_id, capabilies_url = line.split('=')
                     get_access_url.caps[service_id.strip()] = \

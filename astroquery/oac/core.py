@@ -481,10 +481,10 @@ class OACClass(BaseQuery):
             raise AttributeError("ERROR: The web service returned error code: %s" %
                 response.status_code)
 
-        if 'message' in response.text:
-            raise KeyError("ERROR: API Server returned the following error:\n{}".format(response.text))
+        if 'message' in response.content:
+            raise KeyError("ERROR: API Server returned the following error:\n{}".format(response.content))
 
-        raw_output = response.text
+        raw_output = response.content
         output_response = self._format_output(raw_output)
 
         return output_response

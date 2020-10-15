@@ -478,7 +478,7 @@ class SplatalogueClass(BaseQuery):
             splatalogue to make them more terminal-friendly
         """
 
-        result = ascii.read(response.text.split('\n'), delimiter=':',
+        result = ascii.read(response.content.split('\n'), delimiter=':',
                             format='basic', fast_reader=False)
 
         return result

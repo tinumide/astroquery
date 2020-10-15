@@ -194,7 +194,7 @@ Directory Structure::
             response = self._request(method="POST", url=self.server,
                                      data=request_payload, timeout=TIMEOUT)
 
-            return self.extract_image_urls(response.text)
+            return self.extract_image_urls(response.content)
 
         def _parse_result(self, result):
             # do something, probably with regexp's

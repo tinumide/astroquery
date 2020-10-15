@@ -281,7 +281,7 @@ class MiriadeClass(BaseQuery):
         Parser for Miriade request results
         """
 
-        response_txt = response.text
+        response_txt = response.content
 
         if self._get_raw_response:
             return response_txt
@@ -620,10 +620,10 @@ class SkybotClass(BaseQuery):
         """
 
         if self._get_raw_response:
-            return response.text
+            return response.content
 
         # intercept error messages
-        response_txt = response.text.split('\n')[2:-1]
+        response_txt = response.content.split('\n')[2:-1]
         if len(response_txt) < 3 and len(response_txt[-1].split('|')) < 21:
             raise RuntimeError(response_txt[-1])
 

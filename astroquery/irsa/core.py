@@ -364,7 +364,7 @@ class IrsaClass(BaseQuery):
         if not verbose:
             commons.suppress_vo_warnings()
 
-        content = response.text
+        content = response.content
 
         # Check if results were returned
         if 'The catalog is not on the list' in content:

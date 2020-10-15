@@ -48,7 +48,7 @@ class DaceClass(BaseQuery):
             dace_dict = self.transform_data_as_dict(json_data)
             return Table(dace_dict)
         except JSONDecodeError as error:
-            raise ParseException("Failed to parse DACE result. Request response : {}".format(response.text)) from error
+            raise ParseException("Failed to parse DACE result. Request response : {}".format()) from error
 
     @staticmethod
     def transform_data_as_dict(json_data):

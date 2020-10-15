@@ -157,7 +157,7 @@ class BesanconClass(BaseQuery):
             print("Loading request from Besancon server ...")
 
         # keep the text stored for possible later use
-        text = response.text
+        text = response.content
 
         try:
             filename = self.result_re.search(text).group()

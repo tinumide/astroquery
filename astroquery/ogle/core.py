@@ -145,7 +145,7 @@ class OgleClass(BaseQuery):
 
     def _parse_result(self, response, verbose=False):
         # Parse table, ignore last two (blank) lines
-        raw_data = response.text.split('\n')[:-2]
+        raw_data = response.content.split('\n')[:-2]
         # Select first row and skip first character ('#') to find column
         # headers
         header = raw_data[0][1:].split()

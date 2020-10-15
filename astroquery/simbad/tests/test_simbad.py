@@ -131,7 +131,7 @@ def test_parse_result():
                              'The attempted parsed result is in '
                              'self.last_parsed_result.\n Exception: 7:115: '
                              'no element found')
-    assert isinstance(simbad.Simbad.last_response.text, six.string_types)
+    assert isinstance(simbad.Simbad.last_response.content, six.string_types)
     assert isinstance(simbad.Simbad.last_response.content, six.binary_type)
 
 
