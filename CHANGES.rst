@@ -4,6 +4,12 @@
 Service fixes and enhancements
 ------------------------------
 
+mast
+^^^^
+
+- Changed warning to error for authentication failure. [#1874]
+
+
 ESASky
 ^^^^
 
