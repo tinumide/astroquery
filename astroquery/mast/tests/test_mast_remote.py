@@ -81,25 +81,25 @@ class TestMast:
         assert round(ticobj_loc.separation(SkyCoord("94.6175354 -72.04484622", unit='deg')).value, 4) == 0
 
     ###########################
-    # ObservationsClass tests #
+    # MastObservationsClass tests #
     ###########################
 
     def test_observations_list_missions(self):
-        missions = mast.Observations.list_missions()
+        missions = mast.MastObservations.list_missions()
         assert isinstance(missions, list)
         for m in ['HST', 'HLA', 'GALEX', 'Kepler']:
             assert m in missions
 
     def test_get_metadata(self):
         # observations
-        meta_table = mast.Observations.get_metadata("observations")
+        meta_table = mast.MastObservations.get_metadata("observations")
         assert isinstance(meta_table, Table)
         assert "Column Name" in meta_table.colnames
         assert "Mission" in meta_table["Column Label"]
         assert "obsid" in meta_table["Column Name"]
 
         # products
-        meta_table = mast.Observations.get_metadata("products")
+        meta_table = mast.MastObservations.get_metadata("products")
         assert isinstance(meta_table, Table)
         assert "Column Name" in meta_table.colnames
         assert "Observation ID" in meta_table["Column Label"]
@@ -108,57 +108,57 @@ class TestMast:
     # query functions
 
     def test_observations_query_region_async(self):
-        responses = mast.Observations.query_region_async("322.49324 12.16683", radius="0.005 deg")
+        responses = mast.MastObservations.query_region_async("322.49324 12.16683", radius="0.005 deg")
         assert isinstance(responses, list)
 
     def test_observations_query_region(self):
 
         # clear columns config
-        mast.Observations._column_configs = dict()
+        mast.MastObservations._column_configs = dict()
 
-        result = mast.Observations.query_region("322.49324 12.16683", radius="0.005 deg")
+        result = mast.MastObservations.query_region("322.49324 12.16683", radius="0.005 deg")
         assert isinstance(result, Table)
         assert len(result) > 500
         assert result[np.where(result['obs_id'] == '00031992001')]
 
-        result = mast.Observations.query_region("322.49324 12.16683", radius="0.005 deg",
+        result = mast.MastObservations.query_region("322.49324 12.16683", radius="0.005 deg",
                                                 pagesize=1, page=1)
         assert isinstance(result, Table)
         assert len(result) == 1
 
     def test_observations_query_object_async(self):
-        responses = mast.Observations.query_object_async("M8", radius=".02 deg")
+        responses = mast.MastObservations.query_object_async("M8", radius=".02 deg")
         assert isinstance(responses, list)
 
     def test_observations_query_object(self):
 
         # clear columns config
-        mast.Observations._column_configs = dict()
+        mast.MastObservations._column_configs = dict()
 
-        result = mast.Observations.query_object("M8", radius=".04 deg")
+        result = mast.MastObservations.query_object("M8", radius=".04 deg")
         assert isinstance(result, Table)
         assert len(result) > 150
         assert result[np.where(result['obs_id'] == 'ktwo200071160-c92_lc')]
 
     def test_observations_query_criteria_async(self):
         # without position
-        responses = mast.Observations.query_criteria_async(dataproduct_type=["image"],
+        responses = mast.MastObservations.query_criteria_async(dataproduct_type=["image"],
                                                            proposal_pi="*Ost*",
                                                            s_dec=[43.5, 45.5])
         assert isinstance(responses, list)
 
         # with position
-        responses = mast.Observations.query_criteria_async(filters=["NUV", "FUV"],
+        responses = mast.MastObservations.query_criteria_async(filters=["NUV", "FUV"],
                                                            objectname="M101")
         assert isinstance(responses, list)
 
     def test_observations_query_criteria(self):
 
         # clear columns config
-        mast.Observations._column_configs = dict()
+        mast.MastObservations._column_configs = dict()
 
         # without position
-        result = mast.Observations.query_criteria(instrument_name="*WFPC2*",
+        result = mast.MastObservations.query_criteria(instrument_name="*WFPC2*",
                                                   proposal_id=8169,
                                                   t_min=[49335, 51499])
 
@@ -167,7 +167,7 @@ class TestMast:
         assert ((result['obs_collection'] == 'HST') | (result['obs_collection'] == 'HLA')).all()
 
         # with position
-        result = mast.Observations.query_criteria(filters=["NUV", "FUV"],
+        result = mast.MastObservations.query_criteria(filters=["NUV", "FUV"],
                                                   obs_collection="GALEX",
                                                   objectname="M101")
         assert isinstance(result, Table)
@@ -181,22 +181,22 @@ class TestMast:
 
     # count functions
     def test_observations_query_region_count(self):
-        maxRes = mast.Observations.query_criteria_count()
-        result = mast.Observations.query_region_count("322.49324 12.16683", radius="0.4 deg")
+        maxRes = mast.MastObservations.query_criteria_count()
+        result = mast.MastObservations.query_region_count("322.49324 12.16683", radius="0.4 deg")
         assert isinstance(result, (np.int64, int))
         assert result > 1800
         assert result < maxRes
 
     def test_observations_query_object_count(self):
-        maxRes = mast.Observations.query_criteria_count()
-        result = mast.Observations.query_object_count("M8", radius=".02 deg")
+        maxRes = mast.MastObservations.query_criteria_count()
+        result = mast.MastObservations.query_object_count("M8", radius=".02 deg")
         assert isinstance(result, (np.int64, int))
         assert result > 150
         assert result < maxRes
 
     def test_observations_query_criteria_count(self):
-        maxRes = mast.Observations.query_criteria_count()
-        result = mast.Observations.query_criteria_count(proposal_pi="*Osten*",
+        maxRes = mast.MastObservations.query_criteria_count()
+        result = mast.MastObservations.query_criteria_count(proposal_pi="*Osten*",
                                                         proposal_id=8880)
         assert isinstance(result, (np.int64, int))
         assert result == 7
@@ -204,53 +204,53 @@ class TestMast:
 
     # product functions
     def test_observations_get_product_list_async(self):
-        responses = mast.Observations.get_product_list_async('2003738726')
+        responses = mast.MastObservations.get_product_list_async('2003738726')
         assert isinstance(responses, list)
 
-        responses = mast.Observations.get_product_list_async('2003738726,3000007760')
+        responses = mast.MastObservations.get_product_list_async('2003738726,3000007760')
         assert isinstance(responses, list)
 
-        observations = mast.Observations.query_object("M8", radius=".02 deg")
-        responses = mast.Observations.get_product_list_async(observations[0])
+        observations = mast.MastObservations.query_object("M8", radius=".02 deg")
+        responses = mast.MastObservations.get_product_list_async(observations[0])
         assert isinstance(responses, list)
 
-        responses = mast.Observations.get_product_list_async(observations[0:4])
+        responses = mast.MastObservations.get_product_list_async(observations[0:4])
         assert isinstance(responses, list)
 
     def test_observations_get_product_list(self):
 
         # clear columns config
-        mast.Observations._column_configs = dict()
+        mast.MastObservations._column_configs = dict()
 
-        observations = mast.Observations.query_object("M8", radius=".04 deg")
+        observations = mast.MastObservations.query_object("M8", radius=".04 deg")
         test_obs_id = str(observations[0]['obsid'])
         mult_obs_ids = str(observations[0]['obsid']) + ',' + str(observations[1]['obsid'])
 
-        result1 = mast.Observations.get_product_list(test_obs_id)
-        result2 = mast.Observations.get_product_list(observations[0])
+        result1 = mast.MastObservations.get_product_list(test_obs_id)
+        result2 = mast.MastObservations.get_product_list(observations[0])
         assert isinstance(result1, Table)
         assert len(result1) == len(result2)
 
-        result1 = mast.Observations.get_product_list(mult_obs_ids)
-        result2 = mast.Observations.get_product_list(observations[0:2])
+        result1 = mast.MastObservations.get_product_list(mult_obs_ids)
+        result2 = mast.MastObservations.get_product_list(observations[0:2])
         assert isinstance(result1, Table)
         assert len(result1) == len(result2)
 
         obsLoc = np.where(observations["obs_id"] == 'ktwo200071160-c92_lc')
-        result = mast.Observations.get_product_list(observations[obsLoc])
+        result = mast.MastObservations.get_product_list(observations[obsLoc])
         assert isinstance(result, Table)
         assert len(result) == 1
 
         obsLocs = np.where((observations['target_name'] == 'NGC6523') & (observations['obs_collection'] == "IUE"))
-        result = mast.Observations.get_product_list(observations[obsLocs])
+        result = mast.MastObservations.get_product_list(observations[obsLocs])
         assert isinstance(result, Table)
         assert len(result) == 30
 
     def test_observations_filter_products(self):
-        observations = mast.Observations.query_object("M8", radius=".04 deg")
+        observations = mast.MastObservations.query_object("M8", radius=".04 deg")
         obsLoc = np.where(observations["obs_id"] == 'ktwo200071160-c92_lc')
-        products = mast.Observations.get_product_list(observations[obsLoc])
-        result = mast.Observations.filter_products(products,
+        products = mast.MastObservations.get_product_list(observations[obsLoc])
+        result = mast.MastObservations.filter_products(products,
                                                    productType=["SCIENCE"],
                                                    mrp_only=False)
         assert isinstance(result, Table)
@@ -258,7 +258,7 @@ class TestMast:
 
     def test_observations_download_products(self, tmpdir):
         test_obs_id = '2003600312'
-        result = mast.Observations.download_products(test_obs_id,
+        result = mast.MastObservations.download_products(test_obs_id,
                                                      download_dir=str(tmpdir),
                                                      productType=["SCIENCE"],
                                                      mrp_only=False)
@@ -268,7 +268,7 @@ class TestMast:
                 assert os.path.isfile(row['Local Path'])
 
         # just get the curl script
-        result = mast.Observations.download_products(test_obs_id,
+        result = mast.MastObservations.download_products(test_obs_id,
                                                      download_dir=str(tmpdir),
                                                      curl_flag=True,
                                                      productType=["SCIENCE"],
@@ -287,11 +287,11 @@ class TestMast:
         test_obs_id = '2003600312'
 
         # pull a single data product
-        products = mast.Observations.get_product_list(test_obs_id)
+        products = mast.MastObservations.get_product_list(test_obs_id)
         uri = products['dataURI'][0]
 
         # download it
-        result = mast.Observations.download_file(uri)
+        result = mast.MastObservations.download_file(uri)
         assert result == ('COMPLETE', None, None)
 
     ######################

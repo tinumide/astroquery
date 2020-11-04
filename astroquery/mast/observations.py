@@ -39,12 +39,11 @@ from . import conf, utils
 from .core import MastQueryWithLogin
 
 
-__all__ = ['Observations', 'ObservationsClass',
-           'MastClass', 'Mast']
+__all__ = ['MastObservations', 'MastObservationsClass', 'MastClass', 'Mast']
 
 
 @async_to_sync
-class ObservationsClass(MastQueryWithLogin):
+class MastObservationsClass(MastQueryWithLogin):
     """
     MAST Observations query class.
 
@@ -795,7 +794,7 @@ class MastClass(MastQueryWithLogin):
     MAST query class.
 
     Class that allows direct programatic access to the MAST Portal,
-    more flexible but less user friendly than `ObservationsClass`.
+    more flexible but less user friendly than `MastObservationsClass`.
     """
 
     def _parse_result(self, responses, verbose=False):  # Used by the async_to_sync decorator functionality
@@ -852,5 +851,11 @@ class MastClass(MastQueryWithLogin):
         return self._portal_api_connection.service_request_async(service, params, pagesize, page, **kwargs)
 
 
+@deprecated(since='v0.4.3', alternative='MastObservationsClass')
+class ObservationsClass(MastObservationsClass):
+    pass
+
+
+MastObservations = MastObservationsClass()
 Observations = ObservationsClass()
 Mast = MastClass()

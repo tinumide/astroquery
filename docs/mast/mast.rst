@@ -22,9 +22,9 @@ The observation fields are documented
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> obs_table = Observations.query_region("322.49324 12.16683")
+                >>> obs_table = MastObservations.query_region("322.49324 12.16683")
                 >>> print(obs_table[:10])
 
                 dataproduct_type obs_collection instrument_name ... distance
@@ -44,9 +44,10 @@ Radius is an optional parameter and the default is 0.2 degrees.
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> obs_table = Observations.query_object("M8",radius=".02 deg")
+
+                >>> obs_table = MastObservations.query_object("M8",radius=".02 deg")
                 >>> print(obs_table[:10])
 
                 dataproduct_type obs_collection instrument_name ...    distance
@@ -68,10 +69,10 @@ Observation Criteria Queries
 ----------------------------
 
 To search for observations based on parameters other than position or target name,
-use `~astroquery.mast.ObservationsClass.query_criteria`.
+use `~astroquery.mast.MastObservationsClass.query_criteria`.
 Criteria are supplied as keyword arguments, where valid criteria are "coordinates",
-"objectname", "radius" (as in `~astroquery.mast.ObservationsClass.query_region` and
-`~astroquery.mast.ObservationsClass.query_object`), and all observation fields listed
+"objectname", "radius" (as in `~astroquery.mast.MastObservationsClass.query_region` and
+`~astroquery.mast.MastObservationsClass.query_object`), and all observation fields listed
 `here <https://mast.stsci.edu/api/v0/_c_a_o_mfields.html>`__.
 **Note:** The obstype keyword has been replaced by intentType, with valid values "calibration" and "science." If the intentType keyword is not supplied, both science and calibration observations will be returned.
 
@@ -84,9 +85,9 @@ RA and Dec must be given in decimal degrees, and datetimes in MJD.
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> obs_table = Observations.query_criteria(dataproduct_type=["image"],
+                >>> obs_table = MastObservations.query_criteria(dataproduct_type=["image"],
                 ...                                         proposal_pi="Osten*",
                 ...                                         s_dec=[43.5,45.5])
                 >>> print(obs_table)
@@ -97,7 +98,7 @@ RA and Dec must be given in decimal degrees, and datetimes in MJD.
                            image           1            HST ...    None 2003520267 2011133419
                            image           1            HST ...    None 2003520268 2011133420
 
-                >>> obs_table = Observations.query_criteria(filters=["*UV","Kepler"],objectname="M101")
+                >>> obs_table = MastObservations.query_criteria(filters=["*UV","Kepler"],objectname="M101")
                 >>> print(obs_table)
 
                 dataproduct_type calib_level obs_collection ...   objID1      distance
@@ -124,15 +125,15 @@ This can be useful if trying to decide whether the available memory is sufficien
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> print(Observations.query_region_count("322.49324 12.16683"))
+                >>> print(MastObservations.query_region_count("322.49324 12.16683"))
                 1804
 
-                >>> print(Observations.query_object_count("M8",radius=".02 deg"))
+                >>> print(MastObservations.query_object_count("M8",radius=".02 deg"))
                 196
 
-                >>> print(Observations.query_criteria_count(dataproduct_type="image",
+                >>> print(MastObservations.query_criteria_count(dataproduct_type="image",
                 ...                                         filters=["NUV","FUV"],
                 ...                                         t_max=[52264.4586,54452.8914]))
                 59033
@@ -142,25 +143,25 @@ This can be useful if trying to decide whether the available memory is sufficien
 Metadata Queries
 ----------------
 
-To list data missions archived by MAST and avaiable through `astroquery.mast`, use the `~astroquery.mast.ObservationsClass.list_missions` function.
+To list data missions archived by MAST and avaiable through `astroquery.mast`, use the `~astroquery.mast.MastObservationsClass.list_missions` function.
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> print(Observations.list_missions())
+                >>> print(MastObservations.list_missions())
                 ['IUE', 'Kepler', 'K2FFI', 'EUVE', 'HLA', 'KeplerFFI','FUSE',
                 'K2', 'HST', 'WUPPE', 'BEFS', 'GALEX', 'TUES','HUT', 'SWIFT']
 
 
 To get a table of metadata associated with observation or product lists use the
-`~astroquery.mast.ObservationsClass.get_metadata` function.
+`~astroquery.mast.MastObservationsClass.get_metadata` function.
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> meta_table = Observations.get_metadata("observations")
+                >>> meta_table = MastObservations.get_metadata("observations")
                 >>> print(meta_table[:5])
                    Column Name    Column Label ...       Examples/Valid Values
                 ----------------- ------------ ... ---------------------------------
@@ -170,7 +171,7 @@ To get a table of metadata associated with observation or product lists use the
                           filters      Filters ... F469N, NUV, FUV, LOW DISP, MIRROR
                 wavelength_region     Waveband ...                EUV, XRAY, OPTICAL
 
-                >>> meta_table = Observations.get_metadata("products")
+                >>> meta_table = MastObservations.get_metadata("products")
                 >>> print(meta_table[:3])
 
                  Column Name     Column Label   ...         Examples/Valid Values
@@ -189,16 +190,16 @@ Getting Product Lists
 
 Each observation returned from a MAST query can have one or more associated data products.
 Given one or more observations or observation ids ("obsid")
-`~astroquery.mast.ObservationsClass.get_product_list` will return
+`~astroquery.mast.MastObservationsClass.get_product_list` will return
 a `~astropy.table.Table` containing the associated data products.
 The product fields are documented `here <https://mast.stsci.edu/api/v0/_productsfields.html>`__.
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> obs_table = Observations.query_object("M8",radius=".02 deg")
-                >>> data_products_by_obs = Observations.get_product_list(obs_table[0:2])
+                >>> obs_table = MastObservations.query_object("M8",radius=".02 deg")
+                >>> data_products_by_obs = MastObservations.get_product_list(obs_table[0:2])
                 >>> print(data_products_by_obs)
 
                   obsID    obs_collection ...          productFilename             size
@@ -221,7 +222,7 @@ The product fields are documented `here <https://mast.stsci.edu/api/v0/_products
                 9500243833             K2 ...    k2-tpf-only-target_bw_thumb.png     1301
 
                 >>> obsids = obs_table[0:2]['obsid']
-                >>> data_products_by_id = Observations.get_product_list(obsids)
+                >>> data_products_by_id = MastObservations.get_product_list(obsids)
                 >>> print(data_products_by_id)
 
                   obsID    obs_collection ...          productFilename             size
@@ -253,16 +254,16 @@ The product fields are documented `here <https://mast.stsci.edu/api/v0/_products
 Downloading Data Products
 -------------------------
 
-Products can be downloaded by using `~astroquery.mast.ObservationsClass.download_products`,
+Products can be downloaded by using `~astroquery.mast.MastObservationsClass.download_products`,
 with a `~astropy.table.Table` of data products, or a list (or single) obsid as the argument.
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
                 >>> obsid = '3000007760'
-                >>> data_products = Observations.get_product_list(obsid)
-                >>> manifest = Observations.download_products(data_products)
+                >>> data_products = MastObservations.get_product_list(obsid)
+                >>> manifest = MastObservations.download_products(data_products)
                 Downloading URL http://archive.stsci.edu/pub/iue/data/lwp/13000/lwp13058.mxlo.gz to ./mastDownload/IUE/lwp13058/lwp13058.mxlo.gz ... [Done]
                 Downloading URL http://archive.stsci.edu/pub/vospectra/iue2/lwp13058mxlo_vo.fits to ./mastDownload/IUE/lwp13058/lwp13058mxlo_vo.fits ... [Done]
                 >>> print(manifest)
@@ -276,9 +277,9 @@ with a `~astropy.table.Table` of data products, or a list (or single) obsid as t
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> Observations.download_products('2003839997',
+                >>> MastObservations.download_products('2003839997',
                 ...                                productType="SCIENCE",
                 ...                                curl_flag=True)
 
@@ -297,9 +298,9 @@ The below example illustrates downloading all product files with the extension "
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> Observations.download_products('2003839997',
+                >>> MastObservations.download_products('2003839997',
                 ...                                productSubGroupDescription=["RAW", "UNCAL"],
                 ...                                extension="fits")
                 Downloading URL https://mast.stsci.edu/api/v0/download/file/HST/product/ib3p11p7q_raw.fits to ./mastDownload/HST/IB3P11P7Q/ib3p11p7q_raw.fits ... [Done]
@@ -312,13 +313,13 @@ Product filtering can also be applied directly to a table of products without pr
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> products = Observations.get_product_list('2003839997')
+                >>> products = MastObservations.get_product_list('2003839997')
                 >>> print(len(products))
                 31
 
-                >>> products = Observations.filter_products(data_products,
+                >>> products = MastObservations.filter_products(data_products,
                 ...                                         productSubGroupDescription=["RAW", "UNCAL"],
                 ...                                         extension="fits")
                 >>> print(len(products))
@@ -327,16 +328,16 @@ Product filtering can also be applied directly to a table of products without pr
 Downloading a Single File
 -------------------------
 
-You can download a single data product file using the `~astroquery.mast.ObservationsClass.download_file` method, and passing in
+You can download a single data product file using the `~astroquery.mast.MastObservationsClass.download_file` method, and passing in
 a MAST dataURL.  The default is to download the file the current working directory, which can be changed with
 the *local_path* keyword argument.
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
                 >>> product = 'mast:IUE/url/pub/iue/data/lwp/13000/lwp13058.elbll.gz'
-                >>> result = Observations.download_file(product)
+                >>> result = MastObservations.download_file(product)
                 Downloading URL https://mast.stsci.edu/api/v0.1/Download/file?uri=mast:IUE/url/pub/iue/data/lwp/13000/lwp13058.elbll.gz to ./lwp13058.elbll.gz ... [Done]
                 >>> print(result)
                 ('COMPLETE', None, None)
@@ -354,13 +355,13 @@ connections to the AWS servers. Instructions for creating AWS credentials are av
 are the responsibility of the requester  (see `request pricing <https://aws.amazon.com/s3/pricing/>`__), however
 transfers are free within the US-East AWS region.
 
-Cload data access is enabled using the `~astroquery.mast.ObservationsClass.enable_cloud_dataset` function, which
+Cload data access is enabled using the `~astroquery.mast.MastObservationsClass.enable_cloud_dataset` function, which
 will cause AWS to become the prefered source for data access until it is disabled
-(`~astroquery.mast.ObservationsClass.disable_cloud_dataset`).
+(`~astroquery.mast.MastObservationsClass.disable_cloud_dataset`).
 
-To directly access a list of cloud URIs for a given dataset, use the `~astroquery.mast.ObservationsClass.get_cloud_uris`
-function, however when cloud access is enabled, the standatd download function
-`~astroquery.mast.ObservationsClass.download_products` will preferentially pull files from AWS when they are avilable.
+To directly access a list of cloud URIs for a given dataset, use the `~astroquery.mast.MastObservationsClass.get_cloud_uris`
+function, however when cloud access is enabled, the standard download function
+`~astroquery.mast.MastObservationsClass.download_products` will preferentially pull files from AWS when they are avilable.
 There is also a ``cloud_only`` flag, which when set to True will cause all data products not available in the
 cloud to be skipped.
 
@@ -370,33 +371,33 @@ Getting a list of S3 URIs:
 .. code-block:: python
 
                 >>> import os
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
                 >>> # If credential environment are not already set, we can set them within python.
                 >>> os.environ['AWS_ACCESS_KEY_ID'] = 'myaccesskeyid'
                 >>> os.environ['AWS_SECRET_ACCESS_KEY'] = 'mysecretaccesskey'
 
                 >>> # If your profile is not called [default], update the next line:
-                >>> Observations.enable_cloud_dataset(provider='AWS', profile='default')
+                >>> MastObservations.enable_cloud_dataset(provider='AWS', profile='default')
                 INFO: Using the S3 STScI public dataset [astroquery.mast.core]
                 INFO: See Request Pricing in https://aws.amazon.com/s3/pricing/ for details [astroquery.mast.core]
                 INFO: If you have not configured boto3, follow the instructions here: https://boto3.readthedocs.io/en/latest/guide/configuration.html [astroquery.mast.core]
 
                 >>> # Getting the cloud URIs
-                >>> obs_table = Observations.query_criteria(obs_collection='HST',
+                >>> obs_table = MastObservations.query_criteria(obs_collection='HST',
                 ...                                         filters='F606W',
                 ...                                         instrument_name='ACS/WFC',
                 ...                                         proposal_id=['12062'],
                 ...                                         dataRights='PUBLIC')
-                >>> products = Observations.get_product_list(obs_table)
-                >>> filtered = Observations.filter_products(products,
+                >>> products = MastObservations.get_product_list(obs_table)
+                >>> filtered = MastObservations.filter_products(products,
                 ...                                         productSubGroupDescription='DRZ')
-                >>> s3_uris = Observations.get_cloud_uris(filtered)
+                >>> s3_uris = MastObservations.get_cloud_uris(filtered)
                 >>> print(s3_uris)
                 ['s3://stpubdata/hst/public/jbev/jbeveo010/jbeveo010_drz.fits',
                  's3://stpubdata/hst/public/jbev/jbevet010/jbevet010_drz.fits']
 
-                >>> Observations.disable_cloud_dataset()
+                >>> MastObservations.disable_cloud_dataset()
 
 
 Downloading data products from S3:
@@ -404,23 +405,23 @@ Downloading data products from S3:
 .. code-block:: python
 
                 >>> import os
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
                 >>> # If credential environment are not already set, we can set them within python.
                 >>> os.environ['AWS_ACCESS_KEY_ID'] = 'myaccesskeyid'
                 >>> os.environ['AWS_SECRET_ACCESS_KEY'] = 'mysecretaccesskey'
 
                 >>> # If your profile is not called [default], update the next line:
-                >>> Observations.enable_cloud_dataset(provider='AWS', profile='default')
+                >>> MastObservations.enable_cloud_dataset(provider='AWS', profile='default')
                 INFO: Using the S3 STScI public dataset [astroquery.mast.core]
                 INFO: See Request Pricing in https://aws.amazon.com/s3/pricing/ for details [astroquery.mast.core]
                 INFO: If you have not configured boto3, follow the instructions here: https://boto3.readthedocs.io/en/latest/guide/configuration.html [astroquery.mast.core]
 
                 >>> # Downloading from the cloud
-                >>> obs_table = Observations.query_criteria(obs_collection=['Kepler'],
+                >>> obs_table = MastObservations.query_criteria(obs_collection=['Kepler'],
                 ...                                         objectname="Kepler 12b", radius=0)
-                >>> products = Observations.get_product_list(obs_table[0])
-                >>> manifest = Observations.download_products(products[:10], cloud_only=True)
+                >>> products = MastObservations.get_product_list(obs_table[0])
+                >>> manifest = MastObservations.download_products(products[:10], cloud_only=True)
                 ERROR: Error pulling from S3 bucket: Parameter validation failed: Invalid type for parameter Key, value: None, type: <class 'NoneType'>, valid types: <class 'str'> [astroquery.mast.core]
                 WARNING: Skipping file... [astroquery.mast.core]
                 ERROR: Error pulling from S3 bucket: Parameter validation failed: Invalid type for parameter Key, value: None, type: <class 'NoneType'>, valid types: <class 'str'> [astroquery.mast.core]
@@ -451,7 +452,7 @@ Downloading data products from S3:
                 COMPLETE
                 COMPLETE
 
-                >>> Observations.disable_cloud_dataset()
+                >>> MastObservations.disable_cloud_dataset()
 
 Catalog Queries
 ===============
@@ -968,13 +969,13 @@ To view tokens accessible through your account, visit https://auth.mast.stsci.ed
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> Observations.login(token="12348r9w0sa2392ff94as841")
+                >>> MastObservations.login(token="12348r9w0sa2392ff94as841")
 
                 INFO: MAST API token accepted, welcome User Name [astroquery.mast.core]
 
-                >>> sessioninfo = Observations.session_info()
+                >>> sessioninfo = MastObservations.session_info()
 
                 eppn: user_name@stsci.edu
                 ezid: uname
@@ -982,13 +983,13 @@ To view tokens accessible through your account, visit https://auth.mast.stsci.ed
 
 .. code-block:: python
 
-                >>> from astroquery.mast import Observations
+                >>> from astroquery.mast import MastObservations
 
-                >>> my_session = Observations(token="12348r9w0sa2392ff94as841")
+                >>> my_session = MastObservations(token="12348r9w0sa2392ff94as841")
 
                 INFO: MAST API token accepted, welcome User Name [astroquery.mast.core]
 
-                >>> sessioninfo = Observations.session_info()
+                >>> sessioninfo = MastObservations.session_info()
 
                 eppn: user_name@stsci.edu
                 ezid: uname

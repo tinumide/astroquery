@@ -19,11 +19,11 @@ Positional queries can be based on a sky position.  Radius is an optional parame
 
 .. code-block:: python
 
-                >>> from astroquery.gemini import Observations
+                >>> from astroquery.gemini import GeminiObservations
                 >>> from astropy import coordinates, units
 
                 >>> coord = coordinates.SkyCoord(210.80242917, 54.34875, unit="deg")
-                >>> data = Observations.query_region(coordinates=coord, radius=0.3*units.deg)
+                >>> data = GeminiObservations.query_region(coordinates=coord, radius=0.3*units.deg)
                 >>> print(data[0:5])
 
                 exposure_time detector_roi_setting detector_welldepth_setting  telescope   ...
@@ -42,9 +42,9 @@ You may also do a query by the name of the object you are interested in.
 
 .. code-block:: python
 
-                >>> from astroquery.gemini import Observations
+                >>> from astroquery.gemini import GeminiObservations
 
-                >>> data = Observations.query_object(objectname='m101')
+                >>> data = GeminiObservations.query_object(objectname='m101')
                 >>> print(data[0:5])
 
                 exposure_time detector_roi_setting detector_welldepth_setting  telescope   ...
@@ -59,20 +59,20 @@ You may also do a query by the name of the object you are interested in.
 Observation Criteria Queries
 ----------------------------
 
-Additional search terms are available as optional arguments to the `~astroquery.gemini.ObservationsClass.query_criteria`
+Additional search terms are available as optional arguments to the `~astroquery.gemini.GeminiObservationsClass.query_criteria`
 call.  These all have default values of None, in which case they will not be considered during the search.  The one
 exception is ``radius``, which will be set to 0.3 degrees by default if either ``coordinates`` or ``objectname`` are
 specified.
 
 Some examples of available search fields are the instrument used, such as GMOS-N, the observation_type, such as BIAS,
 and the program ID.  For a complete list of available search fields, see
-`~astroquery.gemini.ObservationsClass.query_criteria`
+`~astroquery.gemini.GeminiObservationsClass.query_criteria`
 
 .. code-block:: python
 
-                >>> from astroquery.gemini import Observations
+                >>> from astroquery.gemini import GeminiObservations
 
-                >>> data = Observations.query_criteria(instrument='GMOS-N',
+                >>> data = GeminiObservations.query_criteria(instrument='GMOS-N',
                 ...                                    program_id='GN-CAL20191122',
                 ...                                    observation_type='BIAS')
                 >>> print(data[0:5])
@@ -92,9 +92,9 @@ The ``orderby`` parameter can be used to pass the desired sort order.
 
 .. code-block:: python
 
-                >>> from astroquery.gemini import Observations
+                >>> from astroquery.gemini import GeminiObservations
 
-                >>> data = Observations.query_criteria('centralspectrum',
+                >>> data = GeminiObservations.query_criteria('centralspectrum',
                 ...                                    instrument='GMOS-N',
                 ...                                    program_id='GN-CAL20191122',
                 ...                                    observation_type='BIAS',
@@ -122,9 +122,9 @@ the *NotFail* or *notengineering* terms respectively.
 
 .. code-block:: python
 
-                >>> from astroquery.gemini import Observations
+                >>> from astroquery.gemini import GeminiObservations
 
-                >>> data = Observations.query_raw('GMOS-N', 'BIAS', progid='GN-CAL20191122')
+                >>> data = GeminiObservations.query_raw('GMOS-N', 'BIAS', progid='GN-CAL20191122')
                 >>> print(data[0:5])
 
                 exposure_time detector_roi_setting detector_welldepth_setting  telescope   mdready ...
@@ -140,14 +140,14 @@ Authenticated Sessions
 ----------------------
 
 The Gemini module allows for authenticated sessions using your GOA account.  This is the same account you login
-with on the GOA homepage at `<https://archive.gemini.edu/>`__.  The `astroquery.gemini.ObservationsClass.login`
+with on the GOA homepage at `<https://archive.gemini.edu/>`__.  The `astroquery.gemini.GeminiObservationsClass.login`
 method returns `True` if successful.
 
 .. code-block:: python
 
-                >>> from astroquery.gemini import Observations
+                >>> from astroquery.gemini import GeminiObservations
 
-                >>> Observations.login(username, password)
+                >>> GeminiObservations.login(username, password)
                 >>> # do something with your elevated access
 
 
@@ -160,9 +160,9 @@ proprietary data you may be permissioned for.
 
 .. code-block:: python
 
-                >>> from astroquery.gemini import Observations
+                >>> from astroquery.gemini import GeminiObservations
 
-                >>> Observations.get_file("GS2020AQ319-10.fits", download_dir="/tmp")
+                >>> GeminiObservations.get_file("GS2020AQ319-10.fits", download_dir="/tmp")
 
 
 Reference/API
