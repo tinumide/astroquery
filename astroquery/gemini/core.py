@@ -26,7 +26,7 @@ from ..exceptions import AuthenticationWarning
 logger = logging.getLogger(__name__)
 
 
-__all__ = ['Observations', 'ObservationsClass']  # specifies what to import
+__all__ = ['GeminiObservations', 'GeminiObservationsClass']  # specifies what to import
 
 
 __valid_instruments__ = [
@@ -102,7 +102,7 @@ __valid_raw_reduced__ = [
 ]
 
 
-class ObservationsClass(QueryWithLogin):
+class GeminiObservationsClass(QueryWithLogin):
 
     server = conf.server
     url_helper = URLHelper(server)
@@ -528,4 +528,4 @@ __keys__ = ["exposure_time",
         "release",
         "dec"]
 
-Observations = ObservationsClass()
+GeminiObservations = GeminiObservationsClass()
