@@ -4,6 +4,14 @@
 Service fixes and enhancements
 ------------------------------
 
+observations
+^^^^^^^^^^^^
+
+- Renamed and deprecated Observations and ObservationsClass in MAST 
+  and GEMINI modules. [#1885]
+
+
+
 ESASky
 ^^^^
 
