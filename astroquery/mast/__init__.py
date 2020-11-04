@@ -31,12 +31,12 @@ class Conf(_config.ConfigNamespace):
 conf = Conf()
 
 from .cutouts import TesscutClass, Tesscut
-from .observations import Observations, ObservationsClass, MastClass, Mast
+from .observations import MastObservations, MastObservationsClass, MastClass, Mast
 from .collections import Catalogs, CatalogsClass
 from .core import MastQueryWithLogin
 from . import utils
 
-__all__ = ['Observations', 'ObservationsClass',
+__all__ = ['MastObservations', 'MastObservationsClass',
            'Catalogs', 'CatalogsClass',
            'Mast', 'MastClass',
            'Tesscut', 'TesscutClass',
