@@ -40,7 +40,7 @@ from . import conf, utils
 from .core import MastQueryWithLogin
 
 
-__all__ = ['MastObservations', 'MastObservationsClass',
+__all__ = ['Observations', 'ObservationsClass', 'MastObservations', 'MastObservationsClass',
            'MastClass', 'Mast']
 
 
@@ -876,5 +876,11 @@ class MastClass(MastQueryWithLogin):
         return self._portal_api_connection.service_request_async(service, params, pagesize, page, **kwargs)
 
 
+@deprecated(since='v0.4.1', alternative='MastObservationsClass')
+class ObservationsClass(MastObservationsClass):
+    pass
+
+
 MastObservations = MastObservationsClass()
+Observations = ObservationsClass()
 Mast = MastClass()
