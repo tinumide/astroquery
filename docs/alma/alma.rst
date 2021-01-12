@@ -22,7 +22,6 @@ supports object and region based querying and data staging and retrieval.
 You can get interactive help to find out what keywords to query for:
 
 .. code-block:: python
-.. doctest-remote-data::
     >>> from astroquery.alma import Alma
     >>> Alma.help()
     <BLANKLINE>
@@ -92,7 +91,6 @@ Users can log in to acquire proprietary data products.  Login is performed
 via the ALMA CAS (central authentication server).
 
 .. code-block:: python
-.. doctest-remote-data::
     >>> from astroquery.alma import Alma
     >>> alma = Alma()
     >>> # First example: TEST is not a valid username, it will fail
@@ -145,14 +143,7 @@ You can query by object name or by circular region:
     'scientific_category', 'lastModified']
 
 
-Please note that some of the column names are duplicated. First group of names
-(the ones containing "_") are column names as they appear in the ALMA ObsCore
-model while the second group are copies created to maintain backwards
-compatibility with previous version of the library.
-
-
 Region queries are just like any other in astroquery:
-
 
 .. code-block:: python
 .. doctest-remote-data::
@@ -171,15 +162,15 @@ As of version 0.3.4, you can also query other fields by keyword. For example,
 if you want to find all projects with a particular PI, you could do:
 
 .. code-block:: python
-.. doctest-remote-data::
-   >>> rslt = Alma.query_object('W51', pi_name='*Ginsburg*', public=False)
+
+    >>> rslt = Alma.query_object('W51', pi_name='*Ginsburg*', public=False) # doctest: +REMOTE_DATA
 
 The ''query_sia'' method offers another way to query ALMA using the IVOA SIA
 subset of keywords returning results in 'ObsCore' format.
 
 .. code-block:: python
-.. doctest-remote-data::
-    >>> # Alma.query_sia(pol='XX')
+
+    >>> # Alma.query_sia(pol='XX') 
 
 Finally, the ''query_tap'' method is the most general way of querying the ALMA
 metadata. This method is used to send queries to the service using the
@@ -188,15 +179,25 @@ format.
 
 .. code-block:: python
 .. doctest-remote-data::
-    >>> Alma.query_tap("select * from ivoa.obscore where target_name like '%M83%'") # doctest: +IGNORE_OUTPUT 
+    >>> Alma.query_tap("select * from ivoa.obscore where target_name like '%M83%'") # doctest: +IGNORE_OUTPUT
+    <Table length=344>
+         obs_publisher_did      obs_collection facility_name ...                                   science_keyword                                     scientific_category         lastModified     
+                                                             ...                                                                                                                                    
+              bytes33               bytes4         bytes3    ...                                       bytes200                                              bytes200                 object        
+    --------------------------- -------------- ------------- ... ------------------------------------------------------------------------------------ ---------------------- -----------------------
+    ADS/JAO.ALMA#2017.1.00079.S           ALMA           JAO ...                             Spiral galaxies, Giant Molecular Clouds (GMC) properties         Local Universe 2020-12-09T19:05:57.840
+    ADS/JAO.ALMA#2017.1.00079.S           ALMA           JAO ...                             Spiral galaxies, Giant Molecular Clouds (GMC) properties         Local Universe 2020-12-09T19:05:57.840
+    ADS/JAO.ALMA#2017.1.00079.S           ALMA           JAO ...                             Spiral galaxies, Giant Molecular Clouds (GMC) properties         Local Universe 2020-12-09T19:05:57.840
+    ADS/JAO.ALMA#2017.1.00079.S           ALMA           JAO ...                             Spiral galaxies, Giant Molecular Clouds (GMC) properties         Local Universe 2020-12-09T19:05:57.840
+
+    
 
 
 Use the ''help_tap'' method to learn about the ALMA 'ObsCore' keywords and
 their types.
 
 .. code-block:: python
-.. doctest-remote-data::
-    >>> Alma.help_tap()
+    >>> Alma.help_tap() # doctest: +REMOTE_DATA
     Table to query is "voa.ObsCore".
     For example: "select top 1 * from ivoa.ObsCore"
     The scheme of the table is as follows.
@@ -277,12 +278,12 @@ cycle 1 data sets tend to be >100 GB!
 .. code-block:: python
 .. doctest-remote-data::
    >>> import numpy as np
-   >>> uids = np.unique(m83_data['Member ous id'])
-   >>> print(uids)
-        Member ous id
+   >>> uids = np.unique(m83_data['member_ous_uid'])
+   >>> print(uids) # doctest: +IGNORE_OUTPUT
+        member_ous_uid 
     -----------------------
-     uid://A002/X3216af/X31
-    uid://A002/X5a9a13/X689
+    uid://A001/X11f/X30
+    uid://A001/X122/Xf3
 
 
 You can then stage the data and see how big it is (you can ask for one or more
@@ -327,7 +328,7 @@ extract the FITS file, then delete the tarball:
     >>> orionkl = coordinates.SkyCoord('5:35:14.461 -5:21:54.41', frame='fk5',
     ...                                unit=(u.hour, u.deg))
     >>> result = Alma.query_region(orionkl, radius=0.034*u.deg)
-    >>> uid_url_table = Alma.stage_data(result['Member ous id'])
+    >>> uid_url_table = Alma.stage_data(result['member_ous_uid'])
     >>> # Extract the data with tarball file size < 1GB
     >>> small_uid_url_table = uid_url_table[uid_url_table['size'] < 1]
     >>> # get the first 10 files...
@@ -337,7 +338,8 @@ You might want to look at the READMEs from a bunch of files so you know what kin
 
 .. code-block:: python
 .. doctest-remote-data::
-    >>> filelist = Alma.download_and_extract_files(uid_url_table['URL'], regex='.*README$')
+
+    >>> filelist = Alma.download_and_extract_files(uid_url_table['URL'], regex='.*README$') # doctest: +IGNORE_OUTPUT
 
 
 Further Examples
