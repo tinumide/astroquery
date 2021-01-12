@@ -4,6 +4,11 @@
 Service fixes and enhancements
 ------------------------------
 
+alma
+^^^^
+
+- Now supports remote data directive for a chunk of code in doctest [#1935] 
+
 cds.hips2fits
 ^^^^^^^^^^^^^
 
