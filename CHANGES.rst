@@ -4,6 +4,12 @@
 Service fixes and enhancements
 ------------------------------
 
+atomic
+^^^^^^
+
+- added remote data directive to control remote data access for code chunk in doctest [#1937]
+
+
 cds.hips2fits
 ^^^^^^^^^^^^^
 
