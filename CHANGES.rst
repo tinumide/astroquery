@@ -4,6 +4,12 @@
 Service fixes and enhancements
 ------------------------------
 
+cadc
+^^^^
+
+- Documentation cleanup [#1942]
+
+
 cds.hips2fits
 ^^^^^^^^^^^^^
 
