@@ -4,6 +4,12 @@
 Service fixes and enhancements
 ------------------------------
 
+dace
+^^^^
+
+- Documentation clean up [#1947]
+
+
 cds.hips2fits
 ^^^^^^^^^^^^^
 
