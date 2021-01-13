@@ -4,6 +4,12 @@
 Service fixes and enhancements
 ------------------------------
 
+gama 
+^^^^
+
+- Documentation clean up
+
+
 cds.hips2fits
 ^^^^^^^^^^^^^
 
