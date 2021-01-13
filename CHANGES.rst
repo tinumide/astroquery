@@ -4,6 +4,12 @@
 Service fixes and enhancements
 ------------------------------
 
+gemini
+^^^^^^
+
+- Documentation clean up [#1948]
+
+
 cds.hips2fits
 ^^^^^^^^^^^^^
 
