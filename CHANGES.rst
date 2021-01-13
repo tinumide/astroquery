@@ -4,6 +4,13 @@
 Service fixes and enhancements
 ------------------------------
 
+
+fermi 
+^^^^^
+
+- Documentation clean up
+
+
 cds.hips2fits
 ^^^^^^^^^^^^^
 
