@@ -104,7 +104,6 @@ OPAL user accounts are self-managed. Please keep your account details up to date
 To use download tasks, you should create an instance of the Casda object with a username and password. e.g.:
 
 .. code-block:: python
-.. doctest-skip::
 
     >>> from astroquery.casda import Casda
     >>> import getpass
@@ -126,7 +125,6 @@ Authentication is required when staging the data, but not for the download.
 
 An example script to download public continuum images of the NGC 7232 region taken in scheduling block 2338 is shown below:
 .. code-block:: python
-.. doctest-skip::
 .. doctest-remote-data::
 
     >>> from astropy import coordinates, units as u, wcs
