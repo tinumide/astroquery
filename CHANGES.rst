@@ -7,7 +7,7 @@ Service fixes and enhancements
 gama 
 ^^^^
 
-- Documentation clean up
+- Documentation clean up [#1946]
 
 
 cds.hips2fits
