@@ -4,6 +4,12 @@
 Service fixes and enhancements
 ------------------------------
 
+exoplanet_orbit_database
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Documentation clean up
+
+
 cds.hips2fits
 ^^^^^^^^^^^^^
 
