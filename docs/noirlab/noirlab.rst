@@ -1,4 +1,3 @@
-.. doctest-skip-all
 .. # To render rst files to HTML: python setup.py build_docs
 .. # When above stops working (astroquery removes helpers) do next:
 .. # cd docs; make html
@@ -26,16 +25,16 @@ to query.  Specify the coordinates using the appropriate coordinate system from
 `astropy.coordinates`. Here is a basic example:
 
 .. code-block:: python
+.. doctest-remote-data::
 
     >>> from astroquery.noirlab import Noirlab
     >>> import astropy.coordinates as coord
     >>> from astropy import units as u
     >>> from astropy.coordinates import SkyCoord
     >>> coord = SkyCoord(ra=10.625*u.degree, dec=41.2*u.degree, frame='icrs')
-
     >>> noirlab_file = Noirlab(which='file')
     >>> results_file = noirlab_file.query_region(coord, radius='0.1')
-    >>> print(results_file)
+    >>> print(results_file)  # doctest: +IGNORE_OUTPUT
                                 archive_filename                             date_obs  ...             updated
                                      str71                                    str10    ...              str32
     ----------------------------------------------------------------------- ---------- ... --------------------------------
@@ -46,10 +45,9 @@ to query.  Specify the coordinates using the appropriate coordinate system from
     /net/archive/mtn/20151120/kp4m/2015B-2001/k4m_151121_033641_ori.fits.fz 2015-11-21 ... 2020-02-09T01:24:35.525861+00:00
     /net/archive/mtn/20151120/kp4m/2015B-2001/k4m_151121_031258_ori.fits.fz 2015-11-21 ... 2020-02-09T01:24:37.873559+00:00
     /net/archive/mtn/20151120/kp4m/2015B-2001/k4m_151121_041031_ori.fits.fz 2015-11-21 ... 2020-02-09T01:24:38.951230+00:00
-
     >>> noirlab_hdu = Noirlab(which='hdu')
     >>> results_hdu = noirlab_hdu.query_region(coord, radius='0.1')
-    >>> print(results_hdu)
+    >>> print(results_hdu)   # doctest: +IGNORE_OUTPUT
                                     archive_filename                                  caldat    date_obs  ...    ra    telescope
                                          str79                                        str10      str10    ...   str8      str6
     ------------------------------------------------------------------------------- ---------- ---------- ... -------- ---------
