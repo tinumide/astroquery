@@ -1,5 +1,3 @@
-.. doctest-skip-all
-
 .. _astroquery_xmatch:
 
 ************************************
@@ -33,10 +31,11 @@ in the resulting table for demonstration purposes.  Finally, ``colRa1`` and
 ``colDec1`` are used to denote the column names in the input file.
 
 .. code-block:: python
+.. doctest-remote-data::
 
     >>> from astropy import units as u
-    >>> from astroquery.xmatch import XMatch
-    >>> table = XMatch.query(cat1=open('/tmp/pos_list.csv'),
+    >>> from astroquery.xmatch import XMatch   # doctest: +IGNORE_OUTPUT
+    >>> table = XMatch.query(cat1=open('/Users/tinuade/Documents/outreachy/astroquery/tmp/pos_list.csv'),
     ...                      cat2='vizier:II/246/out',
     ...                      max_distance=5 * u.arcsec, colRA1='ra',
     ...                      colDec1='dec')
