@@ -1,5 +1,3 @@
-.. doctest-skip-all
-
 .. _astroquery.vamdc:
 
 **********************************
@@ -26,6 +24,7 @@ If you want to compute the partition function, you can do so using a combination
 of astroquery and the vamdclib tools::
 
 .. code-block:: python
+.. doctest-remote-data::
 
     >>> from astroquery.vamdc import Vamdc
     >>> ch3oh = Vamdc.query_molecule('CH3OH')
