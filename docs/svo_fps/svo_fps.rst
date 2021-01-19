@@ -1,5 +1,3 @@
-.. doctest-skip-all
-
 .. _astroquery.svo_fps:
 
 **********************************************************
@@ -21,6 +19,7 @@ The filter index (all available filters with their properties) can be listed
 with `~astroquery.svo_fps.SvoFpsClass.get_filter_index`:
 
 .. code-block:: python
+.. doctest-remote-data::
 
     >>> from astroquery.svo_fps import SvoFps
     >>> index = SvoFps.get_filter_index()
@@ -73,6 +72,7 @@ must be specified, but the Instrument is optional).  The data table returned
 is of the same form as that from `~astroquery.svo_fps.SvoFpsClass.get_filter_index`:
 
 .. code-block:: python
+.. doctest-remote-data::
 
     >>> filter_list = SvoFps.get_filter_list(facility='Keck', instrument='NIRC2')
     >>> filter_list.info
@@ -123,6 +123,7 @@ transmission curve data using
 `~astroquery.svo_fps.SvoFpsClass.get_transmission_data`:
 
 .. code-block:: python
+.. doctest-remote-data::
 
     >>> data = SvoFps.get_transmission_data('2MASS/2MASS.H')
     >>> print(data)
@@ -156,6 +157,7 @@ transmission curve data using
 These are the data needed to plot the transmission curve for filter:
 
 .. code-block:: python
+.. doctest-remote-data::
 
     >>> import matplotlib.pyplot as plt
     >>> plt.plot(data['Wavelength'], data['Transmission'])
