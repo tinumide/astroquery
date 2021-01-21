@@ -1,5 +1,3 @@
-.. doctest-skip-all
-
 .. _astroquery.hips2fits:
 
 ******************************************
@@ -13,7 +11,7 @@ Query the `CDS hips2fits service <http://alasky.u-strasbg.fr/hips-image-services
 
 The `CDS hips2fits service <http://alasky.u-strasbg.fr/hips-image-services/hips2fits>`_ offers a way
 to extract FITS images from HiPS sky maps. HiPS is an IVOA standard that combines individual images in
-order to produce a progressive hierarchical sky map describing the whole survey. Please refer to the 
+order to produce a progressive hierarchical sky map describing the whole survey. Please refer to the
 `IVOA paper <http://www.ivoa.net/documents/HiPS/20170519/REC-HIPS-1.0-20170519.pdf>`_ for more info.
 
 Given an astropy user-defined WCS with a HiPS name,
@@ -38,6 +36,7 @@ With a user defined astropy WCS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+.. doctest-remote-data::
 
     >>> from astroquery.hips2fits import hips2fits
     >>> import matplotlib.pyplot as plt
@@ -70,12 +69,14 @@ With a user defined astropy WCS
     ...    cmap=Colormap('viridis'),
     ... )
     >>> im = plt.imshow(result)
-    >>> plt.show(im)
+    >>> plt.show()            # doctest: +IGNORE_OUTPUT
 
 .. image:: ./query_wcs.png
 
 Without WCS
 ~~~~~~~~~~~
+.. code-block:: python
+.. doctest-remote-data::
 
     >>> from astroquery.hips2fits import hips2fits
     >>> import matplotlib.pyplot as plt
@@ -98,7 +99,7 @@ Without WCS
     ...    cmap=Colormap('viridis'),
     ... )
     >>> im = plt.imshow(result)
-    >>> plt.show(im)
+    >>> plt.show()    # doctest: +IGNORE_OUTPUT
 
 .. image:: ./query_no_wcs.png
 
@@ -110,4 +111,3 @@ Reference/API
 
 
 .. _hips2fits: http://alasky.u-strasbg.fr/hips-image-services/hips2fits
-
