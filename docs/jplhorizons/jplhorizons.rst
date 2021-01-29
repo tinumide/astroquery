@@ -1,5 +1,3 @@
-.. doctest-skip-all
-
 .. _astroquery.jplhorizons:
 
 ***********************************************************************************
@@ -29,6 +27,7 @@ In order to query information for a specific Solar System body, a
 ``Horizons`` object has to be instantiated:
 
 .. code-block:: python
+.. doctest-remote-data::
 
    >>> from astroquery.jplhorizons import Horizons
    >>> obj = Horizons(id='Ceres', location='568', epochs=2458133.33546)
@@ -57,6 +56,8 @@ set. The following example uses the coordinates of the `Statue of
 Liberty
 <https://www.google.com/maps/place/Statue+of+Liberty+National+Monument/@40.6892534,-74.0466891,17z/data=!3m1!4b1!4m5!3m4!1s0x89c25090129c363d:0x40c6a5770d25022b!8m2!3d40.6892494!4d-74.0445004>`_
 as the observer's location:
+.. code-block:: python
+.. doctest-remote-data::
 
     >>> statue_of_liberty = {'lon': -74.0466891,
     ...                      'lat': 40.6892534,
@@ -64,6 +65,7 @@ as the observer's location:
     >>> obj = Horizons(id='Ceres',
     ...                location=statue_of_liberty,
     ...                epochs=2458133.33546)
+    >>> print(obj)
     JPLHorizons instance "Ceres"; location={'lon': -74.0466891, 'lat': 40.6892534, 'elevation': 0.093}, epochs=[2458133.33546], id_type=smallbody
 
 
@@ -93,6 +95,7 @@ provided. In order to select an object from this list, provide the
 respective id number or record number as ``id`` and use ``id_type=id``:
 
 .. code-block:: python
+.. doctest-remote-data::
 
    >>> from astroquery.jplhorizons import Horizons
    >>> print(Horizons(id='Encke').ephemerides())
@@ -126,6 +129,7 @@ following example queries the ephemerides of asteroid (1) Ceres for
 a range of dates as seen from Maunakea:
 
 .. code-block:: python
+.. doctest-remote-data::
 
    >>> from astroquery.jplhorizons import Horizons
    >>> obj = Horizons(id='Ceres', location='568',
@@ -142,12 +146,7 @@ a range of dates as seen from Maunakea:
       1 Ceres 2010-Jan-31 00:00   2455227.5 ...  13.97264       0.0        0.0
       1 Ceres 2010-Feb-10 00:00   2455237.5 ... 10.877201       0.0        0.0
       1 Ceres 2010-Feb-20 00:00   2455247.5 ...  7.976737       0.0        0.0
-
-
-The following fields are available for each ephemerides query:
-
-.. code-block:: python
-
+   >>> # The following fields are available for each ephemerides query:
    >>> print(eph.columns)
    <TableColumns names=('targetname','datetime_str','datetime_jd','H','G','solar_presence','flags','RA','DEC','RA_rate','DEC_rate','AZ','EL','airmass','magextinct','V','surfbright','illumination','EclLon','EclLat','r','r_rate','delta','delta_rate','lighttime','elong','elongFlag','alpha','sunTargetPA','velocityPA','ObsEclLon','ObsEclLat','GlxLon','GlxLat','RA_3sigma','DEC_3sigma')>
 
@@ -203,6 +202,7 @@ queries the osculating elements of asteroid (433) Eros for a given
 data relative to the Sun:
 
 .. code-block:: python
+.. doctest-remote-data::
 
    >>> from astroquery.jplhorizons import Horizons
    >>> obj = Horizons(id='433', location='500@10',
@@ -213,12 +213,7 @@ data relative to the Sun:
           ---               d       ...       AU           d
    ------------------ ------------- ... ------------- ------------
    433 Eros (1898 DQ) 2458133.33546 ... 1.78244263804 642.93873484
-
-
-The following fields are queried:
-
-.. code-block:: python
-
+   >>> # The following fields are queried:
    >>> print(el.columns)
    <TableColumns names=('targetname','datetime_jd','datetime_str','H','G','e','q','incl','Omega','w','Tp_jd','n','M','nu','a','Q','P')>
 
@@ -246,6 +241,7 @@ vector of asteroid 2012 TC4 as seen from Goldstone for a range of
 epochs:
 
 .. code-block:: python
+.. doctest-remote-data::
 
    >>> from astroquery.jplhorizons import Horizons
    >>> obj = Horizons(id='2012 TC4', location='257',
@@ -271,9 +267,7 @@ epochs:
    (2012 TC4) 2458028.49306 ... 0.0391079696711  -0.0040635698239
    (2012 TC4)     2458028.5 ... 0.0390797485422 -0.00406404543822
    Length = 145 rows
-
-The following fields are queried:
-
+   >>> # The following fields are queried:
    >>> print(vec.columns)
    <TableColumns names=('targetname','datetime_jd','datetime_str','H','G','x','y','z','vx','vy','vz','lighttime','range','range_rate')>
 
@@ -305,18 +299,15 @@ following JPL Horizons ephemerides query of near-Earth asteroid (3552)
 Don Quixote since its year of Discovery:
 
 .. code-block:: python
+.. doctest-remote-data::
 
    >>> from astroquery.jplhorizons import Horizons
    >>> obj = Horizons(id='3552', location='568',
    ...		      epochs={'start':'2010-01-01', 'stop':'2019-12-31',
    ...                        'step':'1y'})
    >>> eph = obj.ephemerides()
-
-As we have seen before, we can display a truncated version of table
-``eph`` by simply using
-
-.. code-block:: python
-
+   >>> # As we have seen before, we can display a truncated version of table
+   >>> # ``eph`` by simply using
    >>> print(eph)
            targetname            datetime_str   ... RA_3sigma DEC_3sigma
               ---                    ---        ...   arcsec    arcsec
@@ -351,7 +342,7 @@ We can get at list of all the columns in this table with
 
 .. code-block:: python
 
-   >>> print(eph.columns)
+   >>> print(eph.columns)     # doctest: +REMOTE_DATA
    <TableColumns names=('targetname','datetime_str','datetime_jd','H','G','solar_presence','flags','RA','DEC','RA_rate','DEC_rate','AZ','EL','airmass','magextinct','V','surfbright','illumination','EclLon','EclLat','r','r_rate','delta','delta_rate','lighttime','elong','elongFlag','alpha','sunTargetPA','velocityPA','ObsEclLon','ObsEclLat','GlxLon','GlxLat','RA_3sigma','DEC_3sigma')>
 
 
@@ -362,8 +353,7 @@ Quixote by using
 
 .. code-block:: python
 
-   >>> print(eph['RA'])
-
+   >>> print(eph['RA'])     # doctest: +REMOTE_DATA
       RA
       deg
    ---------
@@ -390,7 +380,7 @@ and DEC for each epoch
 
 .. code-block:: python
 
-   >>> print(eph['datetime_str', 'RA', 'DEC'])
+   >>> print(eph['datetime_str', 'RA', 'DEC'])    # doctest: +REMOTE_DATA
       datetime_str       RA       DEC
           ---           deg       deg
    ----------------- --------- ---------
@@ -416,6 +406,7 @@ instance, let's calculate the total rate of the object by calculating
 the geometric mean of 'RA_rate' and 'DEC_rate':
 
 .. code-block:: python
+.. doctest-remote-data::
 
    >>> import numpy as np
    >>> print(np.sqrt(eph['RA_rate']**2 + eph['DEC_rate']**2))
@@ -450,6 +441,7 @@ available, too, e.g., the ``RA_rate`` column is expressed in ``arcsec /
 h`` - arcseconds per hour:
 
 .. code-block:: python
+.. doctest-remote-data::
 
    >>> print(eph['RA_rate'])
     RA_rate
@@ -477,6 +469,7 @@ describing the same dimensions. For instance, we can turn ``RA_rate``
 into ``arcsec / s``:
 
 .. code-block:: python
+.. doctest-remote-data::
 
    >>> eph['RA_rate'].convert_unit_to('arcsec/s')
    >>> print(eph['RA_rate'])
@@ -520,7 +513,7 @@ from the JPL Horizons server can be obtained from the
 :class:`~astroquery.jplhorizons.HorizonsClass` object after a query
 has been performed (before the query only ``None`` would be returned):
 
-   >>> print(obj.uri)
+   >>> print(obj.uri)  # doctest: +REMOTE_DATA
    https://ssd.jpl.nasa.gov/horizons_batch.cgi?batch=1&TABLE_TYPE=VECTORS&OUT_UNITS=AU-D&COMMAND=%222012+TC4%3B%22&CENTER=%27257%27&CSV_FORMAT=%22YES%22&REF_PLANE=ECLIPTIC&REF_SYSTEM=J2000&TP_TYPE=ABSOLUTE&LABELS=YES&OBJ_DATA=YES&START_TIME=2017-10-01&STOP_TIME=2017-10-02&STEP_SIZE=10m
 
 If your query failed, it might be useful for you to put the URI into a
